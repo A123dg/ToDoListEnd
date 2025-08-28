@@ -1,0 +1,48 @@
+<div class="register-container">
+  <h2>Đăng ký Todo List</h2>
+
+  <form (ngSubmit)="onRegister()">
+    <label for="username">Tài khoản</label>
+    <input
+      type="text"
+      id="username"
+      [(ngModel)]="username"
+      name="username"
+      placeholder="Nhập tài khoản"
+      required
+    />
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      [(ngModel)]="email"
+      name="email"
+      placeholder="Nhập email"
+      required
+    />
+    <label for="password">Mật khẩu</label>
+    <input
+      type="password"
+      id="password"
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Nhập mật khẩu"
+      required
+    />
+    <label for="confirmPassword">Xác nhận mật khẩu</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      [(ngModel)]="confirmPassword"
+      name="confirmPassword"
+      placeholder="Xác nhận mật khẩu"
+      required
+    />
+
+    <button type="submit" class="btn primary">Đăng ký</button>
+
+    <p class="login-link" (click)="openLogin()">
+      Đã có tài khoản? <span>Đăng nhập ngay</span>
+    </p>
+  </form>
+</div>

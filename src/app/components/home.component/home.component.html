@@ -1,0 +1,22 @@
+<div class="home-container">
+  <app-header (loginClick)="openLogin()" (registerClick)="openRegister()"></app-header>
+  <div class="home-content">
+    
+    <router-outlet></router-outlet>
+  </div>
+  @if(showRegister) {
+    <app-register 
+      (close)="closeRegister()"
+      (loginClick)="switchLogin()"
+      class="modal">
+    </app-register>
+  }
+  @if (showLogin) {
+    <app-login 
+      (success)="onLoginSuccess()" 
+      (close)="closeLogin()"
+      (registerClick)="switchRegister()"
+      class="modal">
+    </app-login>
+  }
+</div>

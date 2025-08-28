@@ -1,0 +1,168 @@
+
+
+* {
+  box-sizing: border-box;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff; 
+  padding: 12px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width:100%;
+  
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.logo .blue {
+  color: #007bff;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar nav a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.navbar nav a:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth .login {
+  padding: 6px 14px;
+  border: 1px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.auth .login:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.auth .register {
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  background: #28a745;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.auth .register:hover {
+  background: #218838;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info .username {
+  font-weight: 500;
+  color: #333;
+}
+
+.user-info button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #dc3545;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.user-info button:hover {
+  background: #b52a37;
+}
+.btn.primary {
+    background: #2196f3;
+    color: #fff;
+    border: none;
+    padding: 14px 0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    transition: background 0.2s;
+}
+.btn.primary:hover {
+    background: #1769aa;
+}
+.btn.secondary {
+    background: #85c3f5;
+    color: #fff;
+    border: none;
+    padding: 14px 0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    transition: background 0.2s;
+}
+.btn.secondary:hover {
+    background: #218838;
+}
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  .navbar nav {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .auth, .user-info {
+    margin-top: 12px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .btn.primary, .btn.secondary, .user-info button {
+    width: 100%; 
+  }
+}

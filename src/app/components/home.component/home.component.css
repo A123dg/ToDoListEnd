@@ -1,0 +1,18 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+.home-container {
+  height: 100vh; 
+  background-image: url('https://i.pinimg.com/736x/ca/53/1c/ca531c109819b0bca82c8b76407c7e4a.jpg'); 
+  background-size: cover;       
+  background-position: center;  
+  background-repeat: no-repeat; 
+  color: white; 
+}
+
+.home-content {
+  text-align: center;
+  padding-top: 100px;
+}

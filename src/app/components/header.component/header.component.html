@@ -1,0 +1,24 @@
+<header class="navbar">
+  <div class="logo">HAH<span class="blue">A</span></div>
+
+  <nav>
+    <a routerLink="/home">TRANG CHỦ</a>
+    <a routerLink="/tasks">CÔNG VIỆC</a>
+    <a>VỀ CHÚNG TÔI</a>
+    <a>LIÊN HỆ</a>
+  </nav>
+
+  @if (isLoggedIn) {
+    <div class="user-info">
+      <span class="username">{{ currentUser?.username }}</span>
+      <button class="btn btn-primary" (click)="logout()">Đăng xuất</button>
+    </div>
+  } @else {
+    <div class="auth">
+      <nav>
+        <button class="btn primary" (click)="onLoginClick()">Đăng nhập</button>
+        <button class="btn secondary" (click)="onRegister()">Đăng ký</button>
+      </nav>
+    </div>
+  }
+</header>
