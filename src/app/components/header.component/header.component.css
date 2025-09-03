@@ -301,10 +301,14 @@
   gap: 12px;
 }
 
-.modal-content label {
-  font-weight: 500;
-  margin-bottom: 4px;
-}
+
+  .modal-content label {
+    display: block;        
+    margin: 8px 0 4px;     
+    font-weight: 500;    
+    color: #333;         
+  }
+
 
 .modal-content input {
   padding: 8px 10px;

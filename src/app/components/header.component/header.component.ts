@@ -88,7 +88,13 @@ export class HeaderComponent {
       },
       error: (err) => {
         console.error('Change password failed:', err);
+        if (err.error && err.error.error) {
+          alert(err.error.error); 
+        } else {
+          alert("Đổi mật khẩu thất bại, vui lòng thử lại!");
+        }
       }
+      
     });
   }
   toggleDropdown()

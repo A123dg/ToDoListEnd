@@ -39,6 +39,6 @@ export class UserService {
     return this.http.put<UserDto>(`${this.apiUrl}/update`, request);
   }
   changePassword(request: ChangePasswordRequest):Observable<UserDto>{
-    return this.http.put<UserDto>(`${this.apiUrl}/change-password`, request);
+    return this.http.post<UserDto>(`${this.apiUrl}/change-password`, request);
   }
 }
