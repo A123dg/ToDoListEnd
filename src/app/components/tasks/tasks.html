@@ -1,6 +1,137 @@
-<div class="task-container">
-    <app-header>
+<app-header></app-header>\
+<div class="tasks-layout" [class.sidebar-open]="sidebarOpen">
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="brand-row">
+      <div class="brand">MENU</div>
+      <button class="close" (click)="closeSidebar()">×</button>
+    </div>
 
-    </app-header>
-    
+    <div class="search-box stack">
+      <input [(ngModel)]="keyword" (keyup.enter)="applyFilter()" placeholder="Search by title or keyword" />
+      <select [(ngModel)]="selectedStatus">
+        <option value="">All status</option>
+        <option value="PENDING">PENDING</option>
+        <option value="DONE">DONE</option>
+      </select>
+      <input [(ngModel)]="selectedDate" type="date" />
+      <button (click)="applyFilter()">Search</button>
+    </div>
+
+    <nav class="nav-groups">
+      <div class="group-title">Menu</div>
+      <a class="nav-item active">Tasks</a>
+    </nav>
+
+    <div class="create-side">
+      <div class="group-title">Create Task</div>
+      <form [formGroup]="taskForm" (ngSubmit)="addTask()" class="create-form stack">
+        <input formControlName="title" placeholder="Title" />
+        <div class="error" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+          Title is required and must be at least 3 characters
+        </div>
+        
+        <input formControlName="description" placeholder="Description" />
+        
+        <input formControlName="dueDate" type="date" />
+        <div class="error" *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">
+          Due date is required
+        </div>
+        
+        <select formControlName="status">
+          <option value="PENDING">PENDING</option>
+          <option value="DONE">DONE</option>
+        </select>
+        
+        <button type="submit" [disabled]="taskForm.invalid">Create</button>
+      </form>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="toolbar">
+      <button class="hamburger" (click)="toggleSidebar()">☰</button>
+      <h1>Tasks</h1>
+      <div class="create">
+        <input [(ngModel)]="keyword" placeholder="Search..." (keyup.enter)="applyFilter()" />
+        <button (click)="applyFilter()">Search</button>
+      </div>
+    </header>
+
+    <section class="list">
+      <div class="task-item" 
+     *ngFor="let t of tasks" 
+     [ngClass]="{ 'PENDING': t.status === 'PENDING', 'DONE': t.status === 'DONE' }">
+  
+  <div class="left">
+    <div class="toggle-switch" (click)="toggleTaskStatus(t)">
+      <input 
+        type="checkbox" 
+        [checked]="t.status === 'DONE'" 
+        (change)="toggleTaskStatus(t)" />
+      <span class="slider"></span>
+    </div>
+
+    <div class="text">
+      <div class="title">{{ t.title || ('Task #' + t.id) }}</div>
+      <div class="meta">Owner: {{ t.ownerId || 'N/A' }}</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="icon edit" (click)="openEditModal(t)" title="Update">✏️</button>
+    <button class="icon delete" (click)="deleteTask(t.id!)" title="Delete">🗑️</button>
+  </div>
 </div>
+
+    </section>
+  </main>
+
+  <div class="overlay" (click)="closeSidebar()" *ngIf="sidebarOpen"></div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Edit Task</h2>
+      <button class="close-btn" (click)="closeEditModal()">×</button>
+    </div>
+    
+    <form [formGroup]="editForm" (ngSubmit)="updateTask()" class="edit-form">
+      <div class="form-group">
+        <label>Title</label>
+        <input formControlName="title" placeholder="Task title" />
+        <div class="error" *ngIf="editForm.get('title')?.invalid && editForm.get('title')?.touched">
+          Title is required and must be at least 3 characters
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="description" placeholder="Task description" rows="3"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Due Date</label>
+        <input formControlName="dueDate" type="date" />
+        <div class="error" *ngIf="editForm.get('dueDate')?.invalid && editForm.get('dueDate')?.touched">
+          Due date is required
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Status</label>
+        <select formControlName="status">
+          <option value="pending">PENDING</option>
+          <option value="completed">DONE</option>
+        </select>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="closeEditModal()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="editForm.invalid">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+

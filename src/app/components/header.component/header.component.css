@@ -1,8 +1,9 @@
-
-
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -10,13 +11,11 @@
   background: #ffffff; 
   padding: 12px 40px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width:100%;
-  
+  width: 100%;
   position: sticky;
   top: 0;
   z-index: 1000;
-    margin: 0 auto;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -50,7 +49,7 @@
   color: #fff;
 }
 
-.auth {
+.auth, .user-info {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -86,13 +85,24 @@
   background: #218838;
 }
 
+/* User info */
 .user-info {
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative; /* để menu bám vào user-info */
+}
+
+.user-info img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
 }
 
 .user-info .username {
+  cursor: pointer;
   font-weight: 500;
   color: #333;
 }
@@ -111,38 +121,110 @@
 .user-info button:hover {
   background: #b52a37;
 }
+
+/* Buttons chung */
+.btn {
+  border: none;
+  width: 120px;       
+  height: 45px;       
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 8px 0;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn.primary {
-    background: #2196f3;
-    color: #fff;
-    border: none;
-    padding: 14px 0;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    transition: background 0.2s;
+  background: #2196f3;
+  color: #fff;
 }
+
 .btn.primary:hover {
-    background: #1769aa;
+  background: #1769aa;
 }
+
 .btn.secondary {
-    background: #85c3f5;
-    color: #fff;
-    border: none;
-    padding: 14px 0;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    transition: background 0.2s;
+  background: #6c757d;
+  color: #fff;
 }
+
 .btn.secondary:hover {
-    background: #218838;
+  background: #565e64;
 }
+
+/* Sidebar cho mobile */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+  padding: 20px;
+  transition: right 0.3s ease-in-out;
+  z-index: 1100;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.sidebar h2 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.sidebar p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.sidebar .btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* Menu user */
+.user-menu {
+  position: absolute;
+  top: 100%;   /* ngay dưới user-info */
+  left: 0;     /* đổi thành right: 0 nếu muốn menu bám sang phải */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 6px 0;
+  z-index: 1200;
+  min-width: 160px;
+}
+
+.user-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-menu li {
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.user-menu li:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -162,7 +244,76 @@
     justify-content: flex-start;
   }
 
-  .btn.primary, .btn.secondary, .user-info button {
+  .btn, .logout, .user-info button {
     width: 100%; 
   }
 }
+/* Modal nền */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+
+.modal-content {
+  position: relative;  
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.modal-content .close:hover {
+  color: #e74c3c; /* đổi màu khi hover */
+}
+.modal-content .brand-row {
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-content label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.modal-content input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.modal-content button {
+  margin-top: 10px;
+}
+.brand-row { display:flex; align-items:center; justify-content:space-between; }
+.brand { font-weight: 700; margin-bottom: 12px; }

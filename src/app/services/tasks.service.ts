@@ -2,51 +2,84 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface TaskItem {
+  id?: number;
+  title: string;
+  description?: string;
+  dueDate: string;
+  status: string;
+  ownerId?: string;
+}
+
+export interface TaskCreateDto {
+  id?: number;
+  title: string;
+  description?: string;
+  dueDate: string; 
+  status: number; 
+  ownerId?: string;
+}
+
+export interface TaskUpdateDto {
+  id?: number;
+  title: string;
+  description?: string;
+  dueDate: string;
+  status: number;
+  ownerId?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl='http://localhost:5085/api/tasks';
+  private apiUrl = 'http://localhost:5085/api/tasks';
 
   constructor(private httpClient: HttpClient) {}
 
-  getAllTasks():Observable<any[]>{
-    return this.httpClient.get<any[]>(this.apiUrl);
+  getAllTasks(): Observable<TaskItem[]> {
+    return this.httpClient.get<TaskItem[]>(`${this.apiUrl}/all`);
   }
 
-  getTasks(status?: string, keyword?: string):Observable<any>
-  {
-    const param:any={};
-    if(status) param.status = status;   // sửa chỗ null check
-    if(keyword) param.keyword = keyword;
-    return this.httpClient.get<any[]>(this.apiUrl,{params:param});
+  getTasks(status?: string, keyword?: string): Observable<TaskItem[]> {
+    const params: any = {};
+    if (status) params.status = status;
+    if (keyword) params.keyword = keyword;
+    return this.httpClient.get<TaskItem[]>(this.apiUrl, { params });
   }
 
-  createTask(id: number):Observable<any>
-  {
-    return this.httpClient.post<any>(`${this.apiUrl}`, {id});
+  getTaskById(id: number): Observable<TaskItem> {
+    return this.httpClient.get<TaskItem>(`${this.apiUrl}/${id}`);
   }
 
-  deleteTask(id: number):Observable<any>
-  {
-    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`);
+  createTask(task: TaskCreateDto): Observable<TaskItem> {
+    return this.httpClient.post<TaskItem>(`${this.apiUrl}`, task);
   }
 
-  updateStatus(status: string):Observable<any>
-  {
-    return this.httpClient.patch<any>(`${this.apiUrl}`, {status});
+  updateTask(id: number, task: TaskUpdateDto): Observable<TaskItem> {
+    return this.httpClient.put<TaskItem>(`${this.apiUrl}/${id}`, task);
   }
 
-  updateTasks(id:number):Observable<any>
-  {
-    return this.httpClient.put<any>(`${this.apiUrl}/${id}`, {id});
+  updateTaskStatus(id: number, status: string): Observable<any> {
+    const url = `${this.apiUrl}/${id}/status`;
+    return this.httpClient.patch(url, `"${status}"`, {
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'text' as 'json'
+    });
+  }
+  
+  
+  
+
+  deleteTask(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-   searchTask(dueDate?: Date, keyword?: string, status?: string): Observable<any[]> {
+  searchTasks(dueDate?: Date, keyword?: string, status?: string): Observable<TaskItem[]> {
     let params = new HttpParams();
 
     if (dueDate) {
-      params = params.set('dueDate', dueDate.toISOString()); 
+      params = params.set('dueDate', dueDate.toISOString());
     }
     if (keyword) {
       params = params.set('keyword', keyword);
@@ -55,7 +88,7 @@ export class TaskService {
       params = params.set('status', status);
     }
 
-    return this.httpClient.get<any[]>(`${this.apiUrl}/search`, { params });
+    return this.httpClient.get<TaskItem[]>(`${this.apiUrl}/search`, { params });
   }
 }
 
