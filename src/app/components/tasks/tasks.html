@@ -74,6 +74,7 @@
     <div class="text">
       <div class="title">{{ t.title || ('Task #' + t.id) }}</div>
       <div class="meta">Owner: {{ t.ownerId || 'N/A' }}</div>
+      <div class="meta">Due: {{ t.dueDate | date:'dd/MM/yyyy' }}</div>
     </div>
   </div>
 

@@ -21,7 +21,7 @@ export interface UserDto {
 export interface UserProfile {
   username:string;
   role:string;
-  email?:string;
+  email:string;
 }
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,8 @@ export interface UserProfile {
 export class UserService {
   private apiUrl = 'http://localhost:5085/api/users';
   constructor(private http: HttpClient ) { }
-  getMe():Observable<UserProfile>{
-    return this.http.get<UserProfile>(`${this.apiUrl}/me`);
+  getMe():Observable<UserDto>{
+    return this.http.get<UserDto>(`${this.apiUrl}/me`);
   }
   getProfile():Observable<UserDto>{
     return this.http.get<UserDto>(`${this.apiUrl}/profile`);

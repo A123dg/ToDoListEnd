@@ -36,7 +36,7 @@ export class HeaderComponent {
       this.isLoggedIn = isLogged;
 
       if (isLogged) {
-        this.userService.getMe().subscribe({
+        this.userService.getProfile().subscribe({
           
           next: (user) => {
   console.log('Fetched user:', user);

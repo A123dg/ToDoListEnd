@@ -74,6 +74,7 @@ export class TasksComponent implements OnInit {
       const statusValue = statusMap[formValue.status];
       if (statusValue === undefined) {
         console.error('Invalid status value:', formValue.status);
+        
         return;
       }
 
@@ -102,6 +103,20 @@ export class TasksComponent implements OnInit {
           console.error('Full error response:', JSON.stringify(err.error, null, 2));
           console.error('Request payload that was sent:', payload);
           console.error('Request payload JSON:', JSON.stringify(payload, null, 2));
+        
+          if (typeof err.error === 'string') {
+            alert(err.error); 
+          }
+          else if (err.error && err.error.errors) {
+            for (const key in err.error.errors) {
+              if (err.error.errors.hasOwnProperty(key)) {
+                alert(err.error.errors[key]);
+              }
+            }
+          }
+          else {
+            alert("Có lỗi xảy ra, vui lòng thử lại!");
+          }
         }
       });
     } else {
